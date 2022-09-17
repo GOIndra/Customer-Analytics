@@ -1,0 +1,314 @@
+Problem Statement - 1
+How many customers has Foodie-Fi ever had?
+
+
+SELECT
+ COUNT(DISTINCT customer_id) AS unique_customer
+FROM dbo.subscriptions;
+
+
+
+Problem Statement - 2
+What is the monthly distribution of trial plan start_date values for our dataset? — Use the start of the month as the
+group by value.
+
+
+
+with t3 as 
+(select customer_id, plan_name, start_date
+from dbo.subscriptions as t1
+join dbo.plans as t2
+on t1.plan_id=t2.plan_id)
+
+select year, month, count(*) as no_trials
+from
+(select *, extract(year from start_date) as year, 
+extract(month from start_date) as month
+from t3) as t4
+where plan_name like 'trial'
+group by 1,2
+
+Problem Statement - 3
+What plan start_date values occur after the year 2020 for our dataset? Show the breakdown by count of events for
+each plan_name.
+
+
+with cte1 as 
+(select *, extract(year from start_date) as year_date
+from 
+(select *
+from dbo.plans as t1
+join 
+dbo.subscriptions as t2
+on t1.plan_id=t2.plan_id) as t2) 
+
+select plan_name , count(*) as no_events
+from cte1
+where year_date>2020
+group by 1
+order by 2
+
+
+Problem Statement - 4
+What is the customer count and percentage of customers who have churned?
+
+
+select count(*) as no_churn, 
+round(100.0 * count(*)/(select count(distinct customer_id) from dbo.subscriptions),2) as churn_percentage
+from dbo.plans as t1
+join 
+dbo.subscriptions as t2
+on t1.plan_id=t2.plan_id
+where plan_name like '%churn%'
+
+
+Problem Statement - 5
+How many customers have churned straight after their initial free trial? — what percentage is this rounded to the
+nearest whole number?
+
+
+METHOD 1:
+select count(t3.customer_id) as churn_customer,				
+round((100.0 * count(t3.customer_id)/				
+(select count(distinct customer_id)				
+from dbo.subscriptions)),1) as churn_customer_percentage				
+from				
+(select customer_id, start_date, start_date+ interval'7day' as last_date				
+from dbo.subscriptions as t1				
+join dbo.plans as t2				
+on t1.plan_id=t2.plan_id				
+where plan_name like 'trial') as t3				
+				
+join				
+(select customer_id, start_date				
+from dbo.subscriptions as t1				
+join dbo.plans as t2				
+on t1.plan_id=t2.plan_id				
+where plan_name like 'churn') as t4				
+on t3.customer_id= t4.customer_id				
+and t3.last_date= t4.start_date	
+
+
+
+
+METHOD 2:
+
+Here we could use both lead and lag function. I have used the lead function here but in the same way lag also 
+can be used.
+
+select count(customer_id) as churn_number,
+100.0 * count(customer_id)/(select count(distinct customer_id) from dbo.subscriptions) as churn_percentage
+from 
+(with cte1 as 
+(select customer_id, t1.plan_id,plan_name,start_date
+from dbo.plans as t1
+join 
+dbo.subscriptions as t2
+on t1.plan_id=t2.plan_id
+order by start_date) 
+
+select *, lead(plan_name,1) over( partition by customer_id) as next_plan
+from cte1) as t3
+where plan_name like 'trial' and next_plan is null
+
+			
+
+
+Problem Statement - 6
+What is the number and percentage of customer plans after their initial free trial?
+
+METHOD 1:
+
+select t4.plan_id, count(t3.customer_id) as non_churn_customer,			
+round((100.0 * count(t3.customer_id)/			
+(select count(distinct customer_id)			
+from dbo.subscriptions)),1) as non_churn_customer_percentage			
+from			
+(select customer_id, start_date, start_date+ interval'7day' as last_date			
+from dbo.subscriptions as t1			
+join dbo.plans as t2			
+on t1.plan_id=t2.plan_id			
+where plan_name like 'trial') as t3			
+			
+join			
+(select t1.plan_id,customer_id, start_date			
+from dbo.subscriptions as t1			
+join dbo.plans as t2			
+on t1.plan_id=t2.plan_id			
+where t1.plan_id in (1,2,3,4)) as t4			
+on t3.customer_id= t4.customer_id			
+and t3.last_date= t4.start_date			
+group by 1			
+		
+
+METHOD 2:
+
+select count(customer_id) as non_churn_number,
+100.0 * count(customer_id)/(select count(distinct customer_id) from dbo.subscriptions) as non_churn_percentage
+from 
+(with cte1 as 
+(select customer_id, t1.plan_id,plan_name,start_date
+from dbo.plans as t1
+join 
+dbo.subscriptions as t2
+on t1.plan_id=t2.plan_id
+order by start_date) 
+
+select *, lead(plan_name,1) over( partition by customer_id) as next_plan
+from cte1) as t3
+where plan_name like 'trial' and next_plan is not null
+
+	
+
+Problem Statement - 7
+What is the customer count and percentage breakdown of all 5 plan_name values at 2020–12–31?
+
+			
+select t2.plan_id, count(customer_id)			
+as count_customer,			
+round(100.0 * count(customer_id)/			
+(select count(distinct customer_id)			
+from dbo.subscriptions),1) as percentage			
+			
+from dbo.subscriptions as t1			
+join dbo.plans as t2			
+on t1.plan_id=t2.plan_id			
+where start_date between '2020-12-25' and '2020-12-31'			
+and t1.plan_id= 0			
+group by 1			
+			
+union			
+			
+(select t1.plan_id,count(customer_id) as count_customer,			
+round(100.0 * count(customer_id)/			
+(select count(distinct customer_id)			
+from dbo.subscriptions),1) as percentage			
+from dbo.subscriptions as t1			
+join dbo.plans as t2			
+on t1.plan_id=t2.plan_id			
+where t1.plan_id=1 and start_date<='2020-12-31'			
+and customer_id not in			
+			
+			
+(select distinct customer_id			
+from dbo.subscriptions as t1			
+join dbo.plans as t2			
+on t1.plan_id=t2.plan_id			
+where t1.plan_id in (2,3,4) and start_date<='2020-12-31')			
+group by 1)			
+			
+union			
+			
+select t1.plan_id, count(customer_id),			
+round(100.0 * count(customer_id)/			
+(select count(distinct customer_id)			
+from dbo.subscriptions),1) as percentage			
+from dbo.subscriptions as t1			
+join dbo.plans as t2			
+on t1.plan_id=t2.plan_id			
+where t1.plan_id=3 and start_date<='2020-12-31'			
+and customer_id not in			
+			
+			
+(select distinct customer_id			
+from dbo.subscriptions as t1			
+join dbo.plans as t2			
+on t1.plan_id=t2.plan_id			
+where t1.plan_id in (4) and start_date<='2020-12-31')			
+group by 1			
+			
+union			
+			
+select t1.plan_id, count(customer_id) as count_customer,			
+round(100.0 * count(customer_id)/			
+(select count(distinct customer_id)			
+from dbo.subscriptions),1) as percentage			
+from dbo.subscriptions as t1			
+join dbo.plans as t2			
+on t1.plan_id=t2.plan_id			
+where t1.plan_id=4	and start_date<'2020-12-31'		
+group by 1			
+			
+union			
+			
+select t1.plan_id, count(customer_id) as count_customer,			
+round(100.0 * count(customer_id)/			
+(select count(distinct customer_id)			
+from dbo.subscriptions),1) as percentage			
+from dbo.subscriptions as t1			
+join dbo.plans as t2			
+on t1.plan_id=t2.plan_id			
+where t1.plan_id=2 and start_date<='2020-12-31'			
+and customer_id not in			
+			
+			
+(select distinct customer_id			
+from dbo.subscriptions as t1			
+join dbo.plans as t2			
+on t1.plan_id=t2.plan_id			
+where t1.plan_id in (3,4) and start_date<='2020-12-31')			
+group by 1			
+			
+			
+
+Problem Statement - 8
+How many customers have upgraded to an annual plan in 2020?
+
+select
+ count(distinct customer_id) as unique_customer
+from dbo.subscriptions
+where plan_id = 3
+ and start_date <= '2020-12-31'
+
+Problem Statement - 9
+How many days on average does it take a customer to an annual plan from the day they join Foodie-Fi?
+
+	select round(avg(duration)) as avg_time_duration			
+	from			
+	(select distinct t3.customer_id, (t4.start_date-t3.start_date) as duration			
+	from			
+	(select customer_id, start_date			
+	from dbo.plans as t1			
+	join dbo.subscriptions as t2			
+	on t1.plan_id= t2.plan_id			
+	where t1.plan_id=0) as t3			
+	join			
+	(select customer_id, start_date			
+	from dbo.plans as t1			
+	join dbo.subscriptions as t2			
+	on t1.plan_id= t2.plan_id			
+	where t1.plan_id=3) as t4			
+	on t3.customer_id=t4.customer_id) as t5			
+
+
+Problem Statement - 10
+How many customers downgraded from a pro-monthly to a basic monthly plan in 2020?
+
+					
+	select t3.customer_id				
+	from				
+	(select customer_id, start_date as start_date_pro_monthly				
+	from dbo.plans as t1				
+	join dbo.subscriptions t2				
+	on t1.plan_id=t2.plan_id				
+	where extract(year from start_date)=2020				
+	and t1.plan_id= 2) as t3				
+	join				
+	(select customer_id, start_date as  start_date_basic_monthly				
+	from dbo.plans as t1				
+	join dbo.subscriptions t2				
+	on t1.plan_id=t2.plan_id				
+	where extract(year from start_date)=2020				
+	and t1.plan_id= 1) as t4				
+	on t3.customer_id= t4.customer_id				
+	where start_date_pro_monthly< start_date_basic_monthly				
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
