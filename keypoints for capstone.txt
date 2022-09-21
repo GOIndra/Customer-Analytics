@@ -1,0 +1,30 @@
+Keypoints:
+
+1) At the end of 2020 we see only around 2% were free trial users
+
+
+2) In 2021 uto April month as per data, there was no free trial users that indicates there are no new customers 
+   here in foodifie that is real alarming condition
+
+
+3) The churn rate increased significantly from 2020 to 2021. In 2020 the churn rate was 23.6%
+   and in 2021 the churn rate 37.8%. 
+                                     More importantly there is no new customers in 2021, so a 
+   severe downfall of the business is predicted from this dataset.
+
+
+4) No of trials or new customers visits in foodifie started dropping since september,2020 and eventually
+   there is no record of new customers in 2021, in 2021 the only revenue is coming from pre-existing customers.
+ 
+
+5)  After free trial plan the conversion to the basic monthly plan and then pro monthly plan is really impressive.
+    But after that there is a significant drop around 28.8% for the annual plan customer percentage.
+
+
+6) The reason of the significant drop in annual plan needs to be found out as  pro monthly 58.6% customers'  next plan
+   data are missing, 20.8% have churned only 20.6% are known to move towards the annual plan. Thus the data needs to be 
+   rectified or causes need to be found why customers are not happy with pro monthly plan.
+
+
+7) A positive side is the customers who have taken the annual plan after their free trial, the avg days is 105 days ie really 
+   impressive. 
