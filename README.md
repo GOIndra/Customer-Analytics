@@ -12,8 +12,7 @@ I
 
 Table ‘plans’ Description
 
-There are 5 customer plans:
-
+  There are 5 customer plans:
 
 Trial —   Customers sign up for a 7-day free trial and will be automatically enrolled in the pro monthly subscription plan
 unless they unsubscribe, downgrade to basic, or upgrade to an annual pro plan during the trial.
@@ -43,3 +42,7 @@ immediately.
 
         When customers cancel their subscription, they will retain access until the end of their current billing cycle, but the
 start date will be the day they opted to quit their service
+
+
+
+
