@@ -1,14 +1,25 @@
 # Ron-s-Foodifie-Capstone-Project
 
 
-         Ron and his buddies founded Foodie-Fi and began selling monthly and annual
+INTRODUCTION :        
+               Ron and his buddies founded Foodie-Fi and began selling monthly and annual
 subscriptions, providing clients with unrestricted on-demand access to exclusive cuisine
 videos from around the world.
 
-         This case study focuses on the use of subscription-style digital data to answer critical
+               This case study focuses on the use of subscription-style digital data to answer critical
 business questions about the customer journey, payments, and business performance.
+
+
+DATA SOURCE : https://www.db-fiddle.com/f/jbahqhW5AQwqV1RZ2xExEz/0
+
+
+TOOLS USED  : Mysql, Microsoft Excel
+              
+              Mysql is used for executing queries and get result and Excel is used to make charts and trends to visualize the 
+              performance of the business
 I
 
+DATA DESCRIPTION:
 
 Table ‘plans’ Description
 
@@ -31,7 +42,6 @@ until the end of the billing cycle.
 
 Table ‘subscriptions’ Description
 
-
 Customer subscriptions display the precise date on which their specific plan id begins.
 
         If a customer downgrades from a pro plan or cancels their subscription — the higher program will remain in place until
@@ -41,7 +51,17 @@ the period expires — the start date in the subscriptions table will reflect th
 immediately.
 
         When customers cancel their subscription, they will retain access until the end of their current billing cycle, but the
-start date will be the day they opted to quit their service
+start date will be the day they opted to quit their service.
+
+
+
+OUTCOMES :
+            1)  The drawbacks or reason for downfall of the business are throughly discussed 
+            2)  The overall health has been analyzed in detail
+            3)  The key factors have been potrayed with proper charts for better visualization
+            4)  All the points have been mentioned in 'Keypoints' section. 
+
+
 
  
 
