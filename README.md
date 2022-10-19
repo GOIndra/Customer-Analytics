@@ -43,6 +43,6 @@ immediately.
         When customers cancel their subscription, they will retain access until the end of their current billing cycle, but the
 start date will be the day they opted to quit their service
 
-
+ 
 
 
