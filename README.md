@@ -1,4 +1,4 @@
-# Ron-s-Foodifie-Capstone-Project
+# Customer Analytics Project
 
 
 INTRODUCTION :        
