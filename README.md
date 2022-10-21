@@ -19,20 +19,22 @@ TOOLS USED  : Mysql, Microsoft Excel
  performance of the business
 I
 
-DATA DESCRIPTION:
+**DATA DESCRIPTION:**
 
 Table ‘plans’ Description
 
-There are 5 customer plans:
+**There are 5 customer plans:**
 
 Trial —   Customers sign up for a 7-day free trial and will be automatically enrolled in the pro monthly subscription plan
 unless they unsubscribe, downgrade to basic, or upgrade to an annual pro plan during the trial.
 
 Basic plan — 
-          Customers have limited access and can only stream their videos with the basic package, which is only
+
+Customers have limited access and can only stream their videos with the basic package, which is only
 available monthly for $9.90.
 
 Pro plan — 
+
 Customers on the Pro plan have no watch time limits and can download videos for offline viewing. Pro
 plans begin at $19.90 per month or $199 for a yearly subscription.
 
@@ -40,10 +42,9 @@ When clients cancel their Foodie-Fi service, a Churn plan record with a null pri
 until the end of the billing cycle.
 
 
-Table ‘subscriptions’ Description
+**Table ‘subscriptions’ Description**
 
 Customer subscriptions display the precise date on which their specific plan id begins.
-
 If a customer downgrades from a pro plan or cancels their subscription — the higher program will remain in place until
 the period expires — the start date in the subscriptions table will reflect the date the actual plan changes.
 
@@ -56,6 +57,7 @@ start date will be the day they opted to quit their service.
 
 
 OUTCOMES :
+
             1)  The drawbacks or reason for downfall of the business are throughly discussed 
             2)  The overall health has been analyzed in detail
             3)  The key factors have been potrayed with proper charts for better visualization
