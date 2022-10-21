@@ -1,7 +1,7 @@
 # Customer Analytics Project
 
 
-INTRODUCTION :        
+**INTRODUCTION** :        
                Ron and his buddies founded Foodie-Fi and began selling monthly and annual
 subscriptions, providing clients with unrestricted on-demand access to exclusive cuisine
 videos from around the world.
@@ -10,10 +10,10 @@ videos from around the world.
 business questions about the customer journey, payments, and business performance.
 
 
-DATA SOURCE : https://www.db-fiddle.com/f/jbahqhW5AQwqV1RZ2xExEz/0
+**DATA SOURCE** : https://www.db-fiddle.com/f/jbahqhW5AQwqV1RZ2xExEz/0
 
 
-TOOLS USED  : Mysql, Microsoft Excel
+**TOOLS USED**  : Mysql, Microsoft Excel
               
  Mysql is used for executing queries and get result and Excel is used to make charts and trends to visualize the 
  performance of the business
@@ -21,19 +21,19 @@ I
 
 **DATA DESCRIPTION:**
 
-Table ‘plans’ Description
+**Table ‘plans’ Description**
 
-**There are 5 customer plans:**
+There are 5 customer plans:
 
-Trial —   Customers sign up for a 7-day free trial and will be automatically enrolled in the pro monthly subscription plan
+**Trial** —   Customers sign up for a 7-day free trial and will be automatically enrolled in the pro monthly subscription plan
 unless they unsubscribe, downgrade to basic, or upgrade to an annual pro plan during the trial.
 
-Basic plan — 
+**Basic plan** — 
 
 Customers have limited access and can only stream their videos with the basic package, which is only
 available monthly for $9.90.
 
-Pro plan — 
+**Pro plan **— 
 
 Customers on the Pro plan have no watch time limits and can download videos for offline viewing. Pro
 plans begin at $19.90 per month or $199 for a yearly subscription.
@@ -56,7 +56,7 @@ start date will be the day they opted to quit their service.
 
 
 
-OUTCOMES :
+**OUTCOMES** :
 
             1)  The drawbacks or reason for downfall of the business are throughly discussed 
             2)  The overall health has been analyzed in detail
